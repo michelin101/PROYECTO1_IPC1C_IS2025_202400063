@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Registro extends JFrame{
+    public static void main(String[] args){
+        new Registro();
+    }
     private static final int MAX = 4;
     private static ArrayList<Cliente> clientes = new ArrayList<>();
 
@@ -17,24 +20,26 @@ public class Registro extends JFrame{
 
         JLabel lCUI = new JLabel("CUI:");
         JTextField fCUI = new JTextField();
-        lCUI.setBounds(230,40,100,30);
-        fCUI.setBounds(70,70,350,30);
+        lCUI.setBounds(230,30,100,30);
+        fCUI.setBounds(70,60,350,30);
 
         JLabel lnombre = new JLabel("Nombre:");
         JTextField fnombre = new JTextField();
-        lnombre.setBounds(220,120,100,30);
-        fnombre.setBounds(70,150,350,30);
+        lnombre.setBounds(220,110,100,30);
+        fnombre.setBounds(70,140,350,30);
 
         JLabel lapellido = new JLabel("Apellido:");
         JTextField fapellido = new JTextField();
-        lapellido.setBounds(220,200,100,30);
-        fapellido.setBounds(70,230,350,30);
+        lapellido.setBounds(220,190,100,30);
+        fapellido.setBounds(70,220,350,30);
 
-        JButton button = new JButton("Crear");
-        button.setBounds(70,300,350,30);
+        JButton buttonC = new JButton("Crear");
+        buttonC.setBounds(70,290,350,30);
 
+        JButton regresar = new JButton("Regresar");
+        regresar.setBounds(0,345,90,15);
 
-        button.addActionListener(new ActionListener() {
+        buttonC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (fCUI.getText().isEmpty() || fnombre.getText().isEmpty() || fapellido.getText().isEmpty()){
@@ -45,6 +50,15 @@ public class Registro extends JFrame{
             }
         });
 
+        regresar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Pantalla pantalla = new Pantalla();
+                pantalla.setVisible(true);
+                dispose();
+            }
+        });
+
         add(lCUI);
         add(fCUI);
         add(lnombre);
@@ -52,9 +66,9 @@ public class Registro extends JFrame{
         add(lapellido);
         add(fapellido);
         add(new JLabel());
-        add(button);
+        add(buttonC);
+        add(regresar);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -73,15 +87,18 @@ public class Registro extends JFrame{
         clientes.add(new Cliente(cui, nombre, apellido));
         JOptionPane.showMessageDialog(null, "Cliente creado exitosamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
     }
+
     static class Cliente {
         private String cui;
         private String nombre;
         private String apellido;
+        private ArrayList<Cuenta> cuentas;
 
         public Cliente(String cui, String nombre, String apellido){
             this.cui = cui;
             this.nombre = nombre;
             this.apellido = apellido;
+            this.cuentas = new ArrayList<>();
         }
         public String getCui(){
             return cui;
@@ -93,5 +110,32 @@ public class Registro extends JFrame{
             return apellido;
         }
 
+        public ArrayList<Cuenta> getCuentas() {
+            return cuentas;
+        }
+
+        public void agregarCuenta(Cuenta cuenta) {
+            cuentas.add(cuenta);
+        }
+    }
+
+    static class Cuenta {
+        private String id;
+        private double saldo;
+
+        public Cuenta(String id, double saldo){
+            this.id = id;
+            this.saldo = saldo;
+        }
+
+        public String getId(){
+            return id;
+        }
+        public double getSaldo(){
+            return saldo;
+        }
+    }
+    public static ArrayList<Cliente> getClientes(){
+        return clientes;
     }
 }

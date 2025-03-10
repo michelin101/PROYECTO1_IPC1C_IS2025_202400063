@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Pantalla_Principal {
     public static void main(String[] args) {
         new Pantalla().setVisible(true);
