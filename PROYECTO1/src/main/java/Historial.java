@@ -22,7 +22,7 @@ public class Historial extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JLabel lId = new JLabel("ID usuario");
-        lId.setBounds(50,30,100,25);
+        lId.setBounds(50,30,150,25);
 
         cId = new JTextField();
         cId.setBounds(150, 30, 200,25);
@@ -37,13 +37,13 @@ public class Historial extends JFrame{
             }
         });
 
-        JLabel lCui = new JLabel("CUI");
-        lCui.setBounds(80,80,100,25);
+        lcui = new JLabel();
+        lcui.setBounds(80,80,100,25);
 
-        JLabel lnombre = new JLabel("Nombre");
+        lnombre = new JLabel();
         lnombre.setBounds(250,80,100,25);
 
-        JLabel lapellido = new JLabel("Apellido");
+        lapellido = new JLabel();
         lapellido.setBounds(450,80,100,25);
 
         String[] columnas = {"ID","Fecha","Detalles", "Debito","Acreditado","Sueldo disponible"};
@@ -69,7 +69,7 @@ public class Historial extends JFrame{
         add(cId);
         add(lId);
         add(mostrar);
-        add(lCui);
+        add(lcui);
         add(lnombre);
         add(lapellido);
         setVisible(true);
@@ -105,9 +105,8 @@ public class Historial extends JFrame{
         }
         if (!transaccionesEncontradas){
             JOptionPane.showMessageDialog(this,"No se encontraton transacciones para este ID");
-            lcui.setText("CUI: ");
-            lnombre.setText("Nombre: ");
-            lapellido.setText("Apellido: ");
+
         }
     }
 }
+

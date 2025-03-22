@@ -1,3 +1,6 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 
 import javax.swing.*;
 import java.awt.*;
@@ -5,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Inicio{
+    private static final Logger logger = LogManager.getLogger(Inicio.class);
     private static final String USERNAME = "AdminIPC1C";
     private static final String PASSWORD = "ipc1c1s2025";
 
@@ -56,9 +60,19 @@ public class Inicio{
                     Pantalla pantallap = new Pantalla();
                     pantallap.setVisible(true);
                     marco.dispose();
+                    ThreadContext.put("usuario", username);
+                    ThreadContext.put("resultado", "Éxito");
+                    ThreadContext.put("detalles", "Sesión iniciada correctamente.");
+                    logger.info("Inicio de sesión");
+                    ThreadContext.clearAll();
 
                 } else {
                     JOptionPane.showMessageDialog(panel, "Error: usuario o contraseña incorrecta");
+                    ThreadContext.put("usuario", username);
+                    ThreadContext.put("resultado", "Error");
+                    ThreadContext.put("detalles", "Usuario o contraseña incorrecta.");
+                    logger.warn("Intento de inicio de sesión fallido");
+                    ThreadContext.clearAll();
                 }}
         });
     }

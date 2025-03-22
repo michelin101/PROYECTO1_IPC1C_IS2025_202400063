@@ -1,12 +1,14 @@
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class Pantalla_Principal {
+    static final Logger logger1 = LogManager.getLogger(Pantalla.class);
     public static void main(String[] args) {
         new Pantalla().setVisible(true);
         Registro.getClientes();
@@ -15,6 +17,7 @@ public class Pantalla_Principal {
 }
 
 class Pantalla extends JFrame {
+
     public Pantalla() {
         setTitle("Pantalla Principal");
         setSize(500, 400);
@@ -66,6 +69,10 @@ class Pantalla extends JFrame {
                 Crear_Cuenta crearCuenta1 = new Crear_Cuenta(Registro.getClientes());
                 crearCuenta1.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema");                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo Crear cuenta de usuario.");
+                Pantalla_Principal.logger1.info("Crear cuenta de usuario");
+                ThreadContext.clearAll();
             }
         });
         retiro.addActionListener(new ActionListener() {
@@ -74,6 +81,11 @@ class Pantalla extends JFrame {
                 Retiros retiros = new Retiros(Registro.getClientes());
                 retiros.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo registro de usuario.");
+                Pantalla_Principal.logger1.info("Registro de usuario");
+                ThreadContext.clearAll();
             }
         });
         deposito.addActionListener(new ActionListener() {
@@ -82,6 +94,11 @@ class Pantalla extends JFrame {
                 Deposito deposito1 = new Deposito(Registro.getClientes());
                 deposito1.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo Deposito de usuario.");
+                Pantalla_Principal.logger1.info("Deposito de usuario");
+                ThreadContext.clearAll();
             }
         });
         buscar.addActionListener(new ActionListener() {
@@ -90,6 +107,11 @@ class Pantalla extends JFrame {
                 Buscar buscar1 = new Buscar();
                 buscar1.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo buscar de usuario.");
+                Pantalla_Principal.logger1.info("Buscar usuario");
+                ThreadContext.clearAll();
             }
         });
         historial.addActionListener(new ActionListener() {
@@ -98,6 +120,11 @@ class Pantalla extends JFrame {
                 Historial historial1 = new Historial();
                 historial1.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo historial de usuario.");
+                Pantalla_Principal.logger1.info("Historial de usuario");
+                ThreadContext.clearAll();
             }
         });
         generar.addActionListener(new ActionListener() {
@@ -106,6 +133,11 @@ class Pantalla extends JFrame {
                 Generar generar1 = new Generar();
                 generar1.setVisible(true);
                 dispose();
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Abriendo genera de usuario.");
+                Pantalla_Principal.logger1.info("Generar de usuario");
+                ThreadContext.clearAll();
             }
         });
         panel.add(bienvenido);

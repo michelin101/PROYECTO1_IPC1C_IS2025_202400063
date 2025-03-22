@@ -1,9 +1,15 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
+
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Deposito extends JFrame {
+    private static final Logger logger = LogManager.getLogger(Deposito.class);
     public static void main(String[] args) {
         new Deposito(Registro.getClientes());
     }
@@ -86,6 +92,11 @@ public class Deposito extends JFrame {
             double monto1 = Double.parseDouble(montoT);
             if (monto1 <= 0) {
                 JOptionPane.showMessageDialog(this, "El monto del deposito debe ser mayor a 0", "Advertensia", JOptionPane.WARNING_MESSAGE);
+                ThreadContext.put("usuario", "Sistema");
+                ThreadContext.put("resultado", "Éxito");
+                ThreadContext.put("detalles", "Depósito realizado exitosamente en la cuenta: " + cuentaId);
+                logger.info("Realizar depósito");
+                ThreadContext.clearAll();
                 return;
             }
             for (Registro.Cliente cliente : clientes) {
@@ -97,8 +108,13 @@ public class Deposito extends JFrame {
                         String idTransaccion ="T"+ System.currentTimeMillis();
                         String fecha = java.time.LocalDateTime.now().toString();
                         Registro.Transaccion transaccion = new Registro.Transaccion(idTransaccion,fecha, "Deposito", 0,monto1,nuevosaldo);
-
+                        cliente.getTransaccion().add(transaccion);
                         JOptionPane.showMessageDialog(this, "Deposito realizado exitosamente", "Inforamcion", JOptionPane.INFORMATION_MESSAGE);
+                        ThreadContext.put("usuario", "Sistema");
+                        ThreadContext.put("resultado", "Error");
+                        ThreadContext.put("detalles", "Error al realizar depósito: ");
+                        logger.error("Realizar depósito");
+                        ThreadContext.clearAll();
                         return;
                     }
                 }

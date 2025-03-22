@@ -1,10 +1,14 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Buscar extends JFrame {
+    private static final Logger logger = LogManager.getLogger(Buscar.class);
     private JTable tablaclientes;
     private DefaultListModel<String> modelocuentas;
     private JList<String> listacuentas;
@@ -92,10 +96,20 @@ public class Buscar extends JFrame {
             if (cliente.getCui().equals(cuiIngresado)){
                 for (Registro.Cuenta cuenta : cliente.getCuentas()){
                     modelocuentas.addElement(cuenta.getId());
+                    ThreadContext.put("usuario", "Sistema");
+                    ThreadContext.put("resultado", "Éxito");
+                    ThreadContext.put("detalles", "Cuentas encontradas para CUI: " + cuiIngresado);
+                    logger.info("Buscar cuentas");
+                    ThreadContext.clearAll();
                 }
                 return;
             }
         }
         JOptionPane.showMessageDialog(this, "No se encontraron cuesntas para el CUI ingresado");
+        ThreadContext.put("usuario", "Sistema");
+        ThreadContext.put("resultado", "Error");
+        ThreadContext.put("detalles", "No se encontraron cuentas para CUI: " + cuiIngresado);
+        logger.warn("Buscar cuentas");
+        ThreadContext.clearAll();
     }
 }

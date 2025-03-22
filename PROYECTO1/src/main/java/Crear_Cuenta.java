@@ -1,10 +1,15 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
+
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Crear_Cuenta extends JFrame {
+    private static final Logger logger = LogManager.getLogger(Crear_Cuenta.class);
     public static void main(String[] args) {
         clientes = Registro.getClientes();
         new Crear_Cuenta(clientes);
@@ -73,11 +78,21 @@ public class Crear_Cuenta extends JFrame {
             if (cliente.getCui().equals(cui)) {
                 if (cliente.getCuentas().size() >= MAXCUENTAS) {
                     JOptionPane.showMessageDialog(this, "No se pueden crear mas cuentas par este cliente", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                    ThreadContext.put("usuario", "Sistema");
+                    ThreadContext.put("resultado", "Exito");
+                    ThreadContext.put("detalles", "Cuenta creada para cliente.");
+                    logger.warn("Crear cuenta");
+                    ThreadContext.clearAll();
                     return;
                 }
                 String idCuenta = "C20C25" + idCounter++;
                 cliente.agregarCuenta(new Registro.Cuenta(idCuenta, 0));
                 JOptionPane.showMessageDialog(this, "Cuenta creada exitosamente" + idCuenta, "Informacio", JOptionPane.INFORMATION_MESSAGE);
+                ThreadContext.put("usuario", "Sistema"); // O el usuario actual
+                ThreadContext.put("resultado", "Error");
+                ThreadContext.put("detalles", "No se pudo crear la cuenta.");
+                logger.warn("Crear cuenta");
+                ThreadContext.clearAll();
                 return;
             }
         }
